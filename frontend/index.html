@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find delicious recipes using ingredients you already have.">
+  <title>Recipe Finder | Cook something wonderful</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Recipe Finder home"><span class="brand-mark">🍲</span> Recipe Finder</a>
+    <nav class="nav">
+      <a href="#discover">Discover</a>
+      <a href="#favorites" id="favoritesNav">My favorites</a>
+      <button class="button button-quiet" id="authButton">Sign in</button>
+      <button class="button button-primary hidden" id="logoutButton">Sign out</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">YOUR KITCHEN, YOUR POSSIBILITIES</span>
+        <h1>Good food starts<br>with <span>what you have.</span></h1>
+        <p>Tell us what is in your kitchen and discover something delicious to make today.</p>
+        <a class="button button-primary" href="#discover">Find a recipe <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-art" aria-label="Illustration of a bowl of food" role="img">
+        <div class="art-circle"></div><div class="art-bowl">🥗</div>
+        <span class="floating floating-one">🥑</span><span class="floating floating-two">🍅</span>
+        <span class="floating floating-three">🌿</span>
+      </div>
+    </section>
+
+    <section class="search-section" id="discover">
+      <div class="section-heading">
+        <div><span class="eyebrow">LET'S GET COOKING</span><h2>What’s in your kitchen?</h2></div>
+        <p>Search by recipe name or list the ingredients you have.</p>
+      </div>
+      <form id="searchForm" class="search-panel">
+        <label class="search-field"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Recipe name, e.g. vegetable pasta" aria-label="Search recipes"></label>
+        <label class="search-field ingredient-field"><span aria-hidden="true">＋</span><input id="ingredientInput" type="text" placeholder="Ingredients: tomato, onion, potato" aria-label="Available ingredients"></label>
+        <button class="button button-primary" type="submit">Search recipes</button>
+      </form>
+      <div class="filter-row"><span id="resultCount">Loading recipes…</span><label>Category <select id="categoryFilter"><option value="">All categories</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Dessert</option></select></label></div>
+      <div id="message" class="message hidden" role="status"></div>
+      <div id="recipeGrid" class="recipe-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="favorites-section" id="favorites">
+      <div class="section-heading"><div><span class="eyebrow">SAVED FOR LATER</span><h2>Your favorite recipes</h2></div><p>Sign in to keep your personal recipe collection.</p></div>
+      <div id="favoritesGrid" class="recipe-grid"></div>
+    </section>
+
+    <section class="admin-section hidden" id="adminSection">
+      <div class="section-heading"><div><span class="eyebrow">ADMIN WORKSPACE</span><h2>Manage recipes</h2></div><p>Add recipes to help everyone find their next meal.</p></div>
+      <form id="recipeForm" class="admin-form">
+        <input type="hidden" id="recipeId">
+        <label>Recipe name<input id="recipeName" required maxlength="120" placeholder="e.g. Tomato pasta"></label>
+        <label>Category<select id="recipeCategory" required><option value="">Choose category</option><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Dessert</option></select></label>
+        <label>Cooking time (minutes)<input id="recipeTime" type="number" min="1" max="600" required value="25"></label>
+        <label>Image URL (optional)<input id="recipeImage" type="url" placeholder="https://…"></label>
+        <label class="wide">Ingredients (one per line)<textarea id="recipeIngredients" required rows="4" placeholder="2 tomatoes&#10;1 onion"></textarea></label>
+        <label class="wide">Preparation steps (one per line)<textarea id="recipeSteps" required rows="4" placeholder="Chop the vegetables&#10;Cook until tender"></textarea></label>
+        <label class="wide">Short description<textarea id="recipeDescription" rows="2" maxlength="500" placeholder="A quick and tasty meal"></textarea></label>
+        <div class="wide form-actions"><button class="button button-primary" type="submit">Save recipe</button><button class="button button-quiet hidden" id="cancelEdit" type="button">Cancel edit</button></div>
+      </form>
+      <div class="admin-users"><h3>Registered users</h3><button class="button button-quiet" id="loadUsersButton">Load users</button><div id="usersList"></div></div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">🍲</span> Recipe Finder</a><p>Simple ingredients. Wonderful meals.</p></footer>
+
+  <dialog id="authDialog" class="dialog">
+    <button class="dialog-close" id="closeAuth" aria-label="Close">×</button>
+    <span class="eyebrow">WELCOME TO YOUR KITCHEN</span><h2 id="authTitle">Sign in</h2>
+    <p id="authIntro">Sign in to save your favorite recipes.</p>
+    <form id="authForm">
+      <label id="nameWrap" class="hidden">Your name<input id="authName" autocomplete="name" maxlength="80"></label>
+      <label>Email address<input id="authEmail" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+      <label>Password<input id="authPassword" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="At least 8 characters"></label>
+      <div id="authError" class="form-error" role="alert"></div>
+      <button class="button button-primary full-width" id="authSubmit" type="submit">Sign in</button>
+    </form>
+    <p class="switch-auth"><span id="switchText">New here?</span> <button id="switchAuth" type="button">Create an account</button></p>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
